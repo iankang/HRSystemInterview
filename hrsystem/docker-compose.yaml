@@ -1,0 +1,44 @@
+version: '3.1'
+volumes:
+  db-data:
+    driver: local
+services:
+  dbPostgresql:
+    image: postgres
+    restart: always
+    container_name: hrs-db-container
+    expose:
+      - 5433
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    command:
+      - -p 5433
+  #    healthcheck:
+  #      test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #      interval: 10s
+  #      timeout: 5s
+  #      retries: 5
+
+
+  app:
+    container_name:  hrs-spring-boot
+    image: hrs-spring-boot:latest
+    restart: always
+    build:
+      context: .
+    ports:
+      - "8089:8089"
+    depends_on:
+      - dbPostgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbPostgresql:5433/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
