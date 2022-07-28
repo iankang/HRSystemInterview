@@ -24,7 +24,6 @@ import javax.validation.Valid;
 public class AuthController {
 
 
-
 //
 //    @Operation(summary = "Verify email by token")
 //    @GetMapping("/email/verification")
@@ -155,20 +154,15 @@ public class AuthController {
     }
 
 
-
     @Operation(summary = "Check if email is available")
     @PostMapping("/check/email")
-    public ResponseEntity<AvailabilityResponse> emailAvailable(
-            @Valid @RequestBody EmailAvailableRequest request
-    ) {
+    public ResponseEntity<AvailabilityResponse> emailAvailable(@Valid @RequestBody EmailAvailableRequest request) {
         return ResponseEntity.ok(new AvailabilityResponse(userService.checkEmailAvailable(request.getEmail())));
     }
 
     @Operation(summary = "sign in the user, retrieve the user token")
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(
-            @Valid @RequestBody SignInRequest signInRequest
-    ) {
+    public ResponseEntity<JwtAuthenticationResponse> signIn(@Valid @RequestBody SignInRequest signInRequest) {
         Authentication authentication = authService.authenticateUser(signInRequest);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -177,27 +171,13 @@ public class AuthController {
 //        val refreshToken = authService.createAndPersistRefreshToken(customUserDetails.username.orEmpty())
         User user = userService.getUserByEmail(signInRequest.getEmail());
 
-        return ResponseEntity.ok(
-                new JwtAuthenticationResponse(
-                        jwt,
-                        "bearer",
-                        user
-                )
-        );
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, "bearer", user));
     }
+
     @Operation(summary = "sign up a new user")
     @PostMapping("/signupForm")
-    public ResponseEntity<User> signUpRequestBody(
-            @RequestParam("username") String username,
-            @RequestParam("email") String email,
-            @RequestParam("isAdmin")  Boolean is_Admin,
-            @RequestParam("isModerator")  Boolean is_Moderator,
-            @RequestParam("password") String password,
-            @RequestParam("confirmPassword") String confirm_password
-    ){
-        SignUpRequest signUpRequest = new SignUpRequest(
-                username, email, password,  is_Admin, is_Moderator
-        );
+    public ResponseEntity<User> signUpRequestBody(@RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("isAdmin") Boolean is_Admin, @RequestParam("isModerator") Boolean is_Moderator, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirm_password) {
+        SignUpRequest signUpRequest = new SignUpRequest(username, email, password, is_Admin, is_Moderator);
 
         return authService.registerUser(signUpRequest);
 
