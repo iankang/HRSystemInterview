@@ -41,11 +41,21 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String email, String password) {
+    private  Boolean isEmailVerified = false;
+    private  Boolean isActive = false;
+
+    public User( String username, String email, String password, Set<Role> roles, Boolean isEmailVerified, Boolean isActive) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.roles = roles;
+        this.isEmailVerified = isEmailVerified;
+        this.isActive = isActive;
     }
+
+    public User() {
+    }
+
 
     public Long getId() {
         return id;

@@ -22,11 +22,16 @@ public class SignUpRequest {
     @Size(min = 6, max = 40)
     private String password;
 
-    public SignUpRequest(String username, String email, Set<String> role, String password) {
+    private Boolean isAdmin;
+    private Boolean isModerator;
+
+    public SignUpRequest(String username, String email, Set<String> role, String password, Boolean isAdmin, Boolean isModerator) {
         this.username = username;
         this.email = email;
         this.role = role;
         this.password = password;
+        this.isAdmin = isAdmin;
+        this.isModerator = isModerator;
     }
 
     public String getUsername() {
@@ -61,6 +66,22 @@ public class SignUpRequest {
         this.password = password;
     }
 
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Boolean getModerator() {
+        return isModerator;
+    }
+
+    public void setModerator(Boolean moderator) {
+        isModerator = moderator;
+    }
+
     @Override
     public String toString() {
         return "SignUpRequest{" +
@@ -68,6 +89,8 @@ public class SignUpRequest {
                 ", email='" + email + '\'' +
                 ", role=" + role +
                 ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", isModerator=" + isModerator +
                 '}';
     }
 }
