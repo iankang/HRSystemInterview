@@ -1,58 +1,22 @@
 package com.kangethe.hrsystem.RestControllers;
 
 
-import com.kangethe.hrsystem.entities.ERole;
-import com.kangethe.hrsystem.entities.Role;
-import com.kangethe.hrsystem.entities.User;
-import com.kangethe.hrsystem.payload.requests.LoginRequest;
-import com.kangethe.hrsystem.payload.requests.SignUpRequest;
-import com.kangethe.hrsystem.payload.responses.JwtResponse;
-import com.kangethe.hrsystem.payload.responses.MessageResponse;
-import com.kangethe.hrsystem.repositories.RoleRepository;
-import com.kangethe.hrsystem.repositories.UserRepository;
-import com.kangethe.hrsystem.security.jwt.JwtUtils;
-import com.kangethe.hrsystem.security.services.UserDetailsImpl;
-import com.kangethe.hrsystem.security.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import com.kangethe.hrsystem.payload.requests.EmailAvailableRequest;
+import com.kangethe.hrsystem.payload.responses.AvailabilityResponse;
+import com.kangethe.hrsystem.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-//
-//    @Operation(summary = "Check if username is available")
-//    @PostMapping("/check/username")
-//    fun usernameAvailable(
-//            @Valid @RequestBody request: UsernameAvailableRequest
-//    ): ResponseEntity<AvailabilityResponse> {
-//        return ResponseEntity.ok(AvailabilityResponse(userService.checkUsernameAvailable(request.username)))
-//    }
-//
-//    @Operation(summary = "Check if email is available")
-//    @PostMapping("/check/email")
-//    fun emailAvailable(
-//            @Valid @RequestBody request: EmailAvailableRequest
-//    ): ResponseEntity<AvailabilityResponse> {
-//        return ResponseEntity.ok(AvailabilityResponse(userService.checkEmailAvailable(request.email)))
-//    }
+
+
 //
 //
 //    @Operation(summary = "sign up a new user")
@@ -235,8 +199,8 @@ public class AuthController {
 //    @Autowired
 //    AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    UserService userService;
+
+    UserService userService;
 //
 //    @Autowired
 //    UserRepository userRepository;
@@ -250,9 +214,21 @@ public class AuthController {
 //    @Autowired
 //    JwtUtils jwtUtils;
 
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/signin")
     public ResponseEntity<?> hello(){
         return  ResponseEntity.ok("oya");
+    }
+    @Operation(summary = "Check if email is available")
+    @PostMapping("/check/email")
+    public ResponseEntity<AvailabilityResponse> emailAvailable(
+            @Valid @RequestBody EmailAvailableRequest request
+    ){
+        return ResponseEntity.ok(new AvailabilityResponse(userService.checkEmailAvailable(request.getEmail())));
     }
 //    @PostMapping("/signin")
 //    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

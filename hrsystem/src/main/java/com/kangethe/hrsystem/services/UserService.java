@@ -1,4 +1,4 @@
-package com.kangethe.hrsystem.security.services;
+package com.kangethe.hrsystem.services;
 
 import com.kangethe.hrsystem.entities.ERole;
 import com.kangethe.hrsystem.entities.Role;
