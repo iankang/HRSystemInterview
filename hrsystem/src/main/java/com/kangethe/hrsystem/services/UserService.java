@@ -27,15 +27,12 @@ public class UserService {
     }
 
 
-    public ResponseEntity<User> getUserByEmail(String email) {
+    public User getUserByEmail(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
-            return ResponseEntity.ok(userOptional.get());
+            return userOptional.get();
         }
-        if (userOptional.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        return null;
     }
 
     public Boolean checkEmailAvailable(String email) {

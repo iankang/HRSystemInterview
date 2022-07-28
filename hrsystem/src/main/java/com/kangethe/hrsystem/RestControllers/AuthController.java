@@ -1,11 +1,19 @@
 package com.kangethe.hrsystem.RestControllers;
 
 
+import com.kangethe.hrsystem.entities.User;
 import com.kangethe.hrsystem.payload.requests.EmailAvailableRequest;
+import com.kangethe.hrsystem.payload.requests.SignInRequest;
+import com.kangethe.hrsystem.payload.requests.SignUpRequest;
 import com.kangethe.hrsystem.payload.responses.AvailabilityResponse;
+import com.kangethe.hrsystem.payload.responses.JwtAuthenticationResponse;
+import com.kangethe.hrsystem.security.services.UserDetailsImpl;
+import com.kangethe.hrsystem.services.AuthService;
 import com.kangethe.hrsystem.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,81 +25,6 @@ public class AuthController {
 
 
 
-//
-//
-//    @Operation(summary = "sign up a new user")
-//    @PostMapping("/signup")
-//    fun signUp(
-//            @Valid @RequestBody signUpRequest: SignUpRequest
-//    ): ResponseEntity<MessageResponse> {
-//        val user = authService.registerUser(signUpRequest) ?: throw ExpectationFailedException(
-//                "Failed to register user ${signUpRequest.username}"
-//        )
-//
-//
-//        val onUserRegistrationCompleteEvent = OnUserRegistrationCompleteEvent(user)
-//        applicationEventPublisher.publishEvent(onUserRegistrationCompleteEvent)
-//        return ResponseEntity.ok(
-//                MessageResponse("Sign up successful! Please Check your email for verification")
-//        )
-//    }
-//    @Operation(summary = "sign up a new user")
-//    @PostMapping(
-//            value = ["/signupForm"],
-//            consumes = [MediaType.MULTIPART_FORM_DATA_VALUE]
-//    )
-//    fun signUpRequestBody(
-//            @RequestParam("username") username: String,
-//            @RequestParam("email") email: String,
-//            @RequestParam("firstName") first_name: String,
-//            @RequestParam("lastName") last_name: String,
-//            @RequestParam("isAdmin") is_Admin: Boolean = false,
-//            @RequestParam("isModerator") is_Moderator: Boolean = false,
-//            @RequestParam("password") password: String,
-//            @RequestParam("confirmPassword") confirm_password: String,
-//            @RequestPart("file") hackathonPoster:MultipartFile
-//    ): ResponseEntity<MessageResponse> {
-//        val signUpRequest = SignUpRequest(
-//                username, email, first_name, last_name, is_Admin, is_Moderator, password, confirm_password
-//        )
-//        val user = authService.registerUser(signUpRequest) ?: throw ExpectationFailedException(
-//                "Failed to register user ${signUpRequest.username}"
-//        )
-//
-//        val userProfileUrl= fileManagerService.uploadImage(ResourceType.USER_PROF,hackathonPoster, user.username)
-//        user.devProfPicUrl = userProfileUrl?.fileName.toString()
-//
-//        userService.save(user)
-//        val onUserRegistrationCompleteEvent = OnUserRegistrationCompleteEvent(user)
-//        applicationEventPublisher.publishEvent(onUserRegistrationCompleteEvent)
-//        return ResponseEntity.ok(
-//                MessageResponse("Sign up successful! Please Check your email for verification")
-//        )
-//    }
-//
-//    @Operation(summary = "sign in the user, retrieve the user token")
-//    @PostMapping("/signin")
-//    fun signIn(
-//            @Valid @RequestBody signInRequest: SignInRequest
-//    ): ResponseEntity<JWTAuthenticationResponse> {
-//        val authentication = authService.authenticateUser(signInRequest)
-//        SecurityContextHolder.getContext().authentication = authentication
-//
-//        val customUserDetails = authentication?.principal as UserDetailsImpl
-//        val jwt = authService.generateToken(customUserDetails)
-////        val refreshToken = authService.createAndPersistRefreshToken(customUserDetails.username.orEmpty())
-//        val user = userService.getUserByEmail(signInRequest.identifier)
-//        val onUserSignedInEvent = OnUserLoginCompleteEvent(user!!)
-//        applicationEventPublisher.publishEvent(onUserSignedInEvent)
-//        return ResponseEntity.ok(
-//                JWTAuthenticationResponse(
-//                        access_token = jwt.orEmpty(),
-//                        user = user!!
-//            )
-//        )
-//    }
-//
-//
 //
 //    @Operation(summary = "Verify email by token")
 //    @GetMapping("/email/verification")
@@ -200,7 +133,8 @@ public class AuthController {
 //    AuthenticationManager authenticationManager;
 
 
-    UserService userService;
+    private final UserService userService;
+    private final AuthService authService;
 //
 //    @Autowired
 //    UserRepository userRepository;
@@ -215,68 +149,57 @@ public class AuthController {
 //    JwtUtils jwtUtils;
 
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
-    @GetMapping("/signin")
-    public ResponseEntity<?> hello(){
-        return  ResponseEntity.ok("oya");
-    }
+
+
     @Operation(summary = "Check if email is available")
     @PostMapping("/check/email")
     public ResponseEntity<AvailabilityResponse> emailAvailable(
             @Valid @RequestBody EmailAvailableRequest request
-    ){
+    ) {
         return ResponseEntity.ok(new AvailabilityResponse(userService.checkEmailAvailable(request.getEmail())));
     }
-//    @PostMapping("/signin")
-//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-//
-//        Authentication authentication = userService.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String jwt = jwtUtils.generateJwtToken(authentication);
-//
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-//        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
-//    }
-//
-//    @PostMapping("/signup")
-//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest request) {
-//        if (userRepository.existsByUsername(request.getUsername())) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Error: username already taken"));
-//        }
-//        if (userRepository.existsByEmail(request.getEmail())) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Error: email already taken"));
-//        }
-//
-//        User user = new User(request.getUsername(), request.getEmail(), encoder.encode(request.getPassword()));
-//
-//        Set<String> strRoles = request.getRole();
-//        Set<Role> roles = new HashSet<>();
-//        if (strRoles == null) {
-//            Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-//            roles.add(userRole);
-//        } else {
-//            strRoles.forEach(role -> {
-//                switch (role) {
-//                    case "admin":
-//                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-//                        roles.add(adminRole);
-//                        break;
-//                    case "mod":
-//                        Role mod = roleRepository.findByName(ERole.ROLE_MODERATOR).orElseThrow(() -> new RuntimeException("Error. Role is not found"));
-//                        roles.add(mod);
-//                        break;
-//                    default:
-//                        Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error. Role is not found"));
-//                        roles.add(userRole);
-//                }
-//            });
-//        }
-//        user.setRoles(roles);
-//        userRepository.save(user);
-//        return ResponseEntity.ok(new MessageResponse("User registered Successfully!"));
-//    }
+
+    @Operation(summary = "sign in the user, retrieve the user token")
+    @PostMapping("/signin")
+    public ResponseEntity<JwtAuthenticationResponse> signIn(
+            @Valid @RequestBody SignInRequest signInRequest
+    ) {
+        Authentication authentication = authService.authenticateUser(signInRequest);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        UserDetailsImpl customUserDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = authService.generateToken(customUserDetails);
+//        val refreshToken = authService.createAndPersistRefreshToken(customUserDetails.username.orEmpty())
+        User user = userService.getUserByEmail(signInRequest.getEmail());
+
+        return ResponseEntity.ok(
+                new JwtAuthenticationResponse(
+                        jwt,
+                        "bearer",
+                        user
+                )
+        );
+    }
+    @Operation(summary = "sign up a new user")
+    @PostMapping("/signupForm")
+    public ResponseEntity<User> signUpRequestBody(
+            @RequestParam("username") String username,
+            @RequestParam("email") String email,
+            @RequestParam("isAdmin")  Boolean is_Admin,
+            @RequestParam("isModerator")  Boolean is_Moderator,
+            @RequestParam("password") String password,
+            @RequestParam("confirmPassword") String confirm_password
+    ){
+        SignUpRequest signUpRequest = new SignUpRequest(
+                username, email, password,  is_Admin, is_Moderator
+        );
+
+        return authService.registerUser(signUpRequest);
+
+    }
 }

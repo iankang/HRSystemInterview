@@ -25,10 +25,9 @@ public class SignUpRequest {
     private Boolean isAdmin;
     private Boolean isModerator;
 
-    public SignUpRequest(String username, String email, Set<String> role, String password, Boolean isAdmin, Boolean isModerator) {
+    public SignUpRequest(String username, String email,  String password, Boolean isAdmin, Boolean isModerator) {
         this.username = username;
         this.email = email;
-        this.role = role;
         this.password = password;
         this.isAdmin = isAdmin;
         this.isModerator = isModerator;
