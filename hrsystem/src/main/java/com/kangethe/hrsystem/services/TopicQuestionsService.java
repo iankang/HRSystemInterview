@@ -51,6 +51,8 @@ public class TopicQuestionsService {
 
         topicQuestions.setTopicQuestion(updatedQuestion.getTopicQuestion());
 
+        topicsQuestionRepository.save(topicQuestions);
+
         return new ResponseEntity<>(topicQuestions, HttpStatus.OK);
     }
 

@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "topic_questions")
@@ -27,6 +28,9 @@ public class TopicQuestions {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Topics topic;
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<Answers> answers;
 
 
     public TopicQuestions() {
