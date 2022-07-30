@@ -12,6 +12,8 @@ import com.kangethe.hrsystem.security.services.UserDetailsImpl;
 import com.kangethe.hrsystem.services.AuthService;
 import com.kangethe.hrsystem.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,7 +28,7 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 //
 //    @Operation(summary = "Verify email by token")
 //    @GetMapping("/email/verification")
@@ -168,18 +170,13 @@ public class AuthController {
     public ResponseEntity<JwtAuthenticationResponse> signIn(@Valid @RequestBody SignInRequest signInRequest) {
         Authentication authentication = authService.authenticateUser(signInRequest);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        if(authentication == null) {
-            throw new NotFoundException("User is not found");
-        }
         UserDetailsImpl customUserDetails = (UserDetailsImpl) authentication.getPrincipal();
         String jwt = authService.generateToken(customUserDetails);
-//        val refreshToken = authService.createAndPersistRefreshToken(customUserDetails.username.orEmpty())
         Optional<User> userOptional = userService.getUserByEmail(signInRequest.getEmail());
         User user = null;
         if (userOptional.isPresent()){
             user = userOptional.get();
-        }
-        if (userOptional.isEmpty()) {
+        } else {
             throw new NotFoundException("User Not Found");
         }
 

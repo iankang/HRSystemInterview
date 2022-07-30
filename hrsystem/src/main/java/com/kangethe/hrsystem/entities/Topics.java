@@ -1,14 +1,19 @@
 package com.kangethe.hrsystem.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "topics")
+@Getter
+@Setter
 public class Topics {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long topic_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long topicId;
     private String topicName;
 
     public Topics() {
@@ -19,20 +24,4 @@ public class Topics {
         this.topicName = topicName;
     }
 
-
-    public String getTopicName() {
-        return topicName;
-    }
-
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
-    }
-
-    @Override
-    public String toString() {
-        return "Topics{" +
-                "id=" + topic_id +
-                ", topicName='" + topicName + '\'' +
-                '}';
-    }
 }
