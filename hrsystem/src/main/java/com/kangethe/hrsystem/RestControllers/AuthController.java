@@ -3,6 +3,7 @@ package com.kangethe.hrsystem.RestControllers;
 
 import com.kangethe.hrsystem.entities.User;
 import com.kangethe.hrsystem.exception.NotFoundException;
+import com.kangethe.hrsystem.exception.UnauthenticatedException;
 import com.kangethe.hrsystem.payload.requests.EmailAvailableRequest;
 import com.kangethe.hrsystem.payload.requests.SignInRequest;
 import com.kangethe.hrsystem.payload.requests.SignUpRequest;
@@ -169,6 +170,9 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signIn(@Valid @RequestBody SignInRequest signInRequest) {
         Authentication authentication = authService.authenticateUser(signInRequest);
+        if(authentication == null){
+            throw new UnauthenticatedException("Try Logging in first");
+        }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl customUserDetails = (UserDetailsImpl) authentication.getPrincipal();
         String jwt = authService.generateToken(customUserDetails);

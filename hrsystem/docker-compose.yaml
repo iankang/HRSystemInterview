@@ -1,7 +1,6 @@
 version: '3.1'
 volumes:
   db-data:
-    driver: local
 services:
   dbPostgresql:
     image: postgres
@@ -10,7 +9,7 @@ services:
     expose:
       - 5433
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data
     ports:
       - "5433:5433"
     environment:

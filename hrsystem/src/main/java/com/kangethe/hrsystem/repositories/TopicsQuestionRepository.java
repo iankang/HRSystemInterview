@@ -9,4 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface TopicsQuestionRepository extends JpaRepository<TopicQuestions,Long> {
+    List<TopicQuestions> findByTopicId(Long topicId);
 }

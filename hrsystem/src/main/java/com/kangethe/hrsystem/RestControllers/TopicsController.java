@@ -42,6 +42,7 @@ public class TopicsController {
     @Operation(summary = "Add a new HR topic using a form input", description = "Adds a HR topic.", tags = {"Topics"})
     @PostMapping("/createTopicForm")
     public ResponseEntity<Topics> createTopicForm(
+            @Parameter(name = "name of topic")
            @RequestParam("topic") String topicName
     ) {
 
@@ -49,6 +50,7 @@ public class TopicsController {
         return topicsService.createTopic(topic);
     }
 
+    @Operation(summary = "Get all Topics", description = "Gets All topics", tags = {"Topics"})
     @GetMapping("/getAllTopics")
     public ResponseEntity<List<Topics>> getAllTopics() {
         return topicsService.getTopics();

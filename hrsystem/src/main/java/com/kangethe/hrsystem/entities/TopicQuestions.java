@@ -1,6 +1,7 @@
 package com.kangethe.hrsystem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +17,8 @@ import javax.persistence.*;
 @ToString
 public class TopicQuestions {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String topicQuestion;

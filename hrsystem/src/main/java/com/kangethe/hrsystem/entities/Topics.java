@@ -1,5 +1,6 @@
 package com.kangethe.hrsystem.entities;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +13,9 @@ import javax.persistence.*;
 public class Topics {
 
     @Id
+    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long topicId;
+    private Long id;
     private String topicName;
 
     public Topics() {
