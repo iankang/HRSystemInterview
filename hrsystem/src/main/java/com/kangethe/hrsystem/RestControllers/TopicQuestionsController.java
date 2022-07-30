@@ -31,19 +31,20 @@ public class TopicQuestionsController {
     }
 
     @Operation(summary = "Add a question under a policy topic",description = "Adds a question to topic",tags = {"Questions"})
-    @PostMapping("/topicId/{topicId}/topicQuestion")
+    @PostMapping("")
     public ResponseEntity<TopicQuestions> createQuestion(
             @Parameter(description = "topic Id to add question to", required = true)
-            @PathVariable("topicId") Long topicId,
+            @RequestParam("topicId") Long topicId,
 
-            @Parameter(description = "the body of the actual question", schema = @Schema(implementation = TopicQuestions.class))
-            @RequestBody TopicQuestions topicQuestions
+            @Parameter(description = "the question")
+            @RequestParam String question
     ){
+        TopicQuestions topicQuestions = new TopicQuestions(question);
         return topicsQuestionService.createTopicQuestion(topicId,topicQuestions);
     }
 
     @Operation(summary = "Get All questions from a topic", description = "Gets all questions belonging to a particular topic",tags = {"Questions"})
-    @GetMapping("/topic/{topicId}")
+    @GetMapping("/topics/{topicId}")
     public ResponseEntity<List<TopicQuestions>> getAllQuestions(
             @Parameter(description = "topic id that you want questions from", required = true)
             @PathVariable("topicId") Long topicId

@@ -42,7 +42,7 @@ public class TopicsController {
     @Operation(summary = "Add a new HR topic using a form input", description = "Adds a HR topic.", tags = {"Topics"})
     @PostMapping("/createTopicForm")
     public ResponseEntity<Topics> createTopicForm(
-            @Parameter(name = "name of topic")
+            @Parameter(description = "name of topic")
            @RequestParam("topic") String topicName
     ) {
 

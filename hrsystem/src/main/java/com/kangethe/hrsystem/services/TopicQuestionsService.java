@@ -42,7 +42,7 @@ public class TopicQuestionsService {
     }
 
     public ResponseEntity<TopicQuestions> getTopicQuestionByQuestionId(Long questionId) {
-        TopicQuestions topicQuestions = topicsQuestionRepository.findById(questionId).orElseThrow(() -> new NotFoundException("topic with id: " + questionId + " not found"));
+        TopicQuestions topicQuestions = topicsQuestionRepository.findById(questionId).orElseThrow(() -> new NotFoundException("question with id: " + questionId + " not found"));
         return ResponseEntity.ok(topicQuestions);
     }
 

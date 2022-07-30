@@ -30,10 +30,15 @@ public class TopicQuestions {
     private Topics topic;
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Answers> answers;
 
 
     public TopicQuestions() {
+    }
+
+    public TopicQuestions(String topicQuestion) {
+        this.topicQuestion = topicQuestion;
     }
 
     public TopicQuestions(String topicQuestion, Topics topic) {
