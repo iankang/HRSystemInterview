@@ -15,7 +15,7 @@ public class TopicQuestions {
 
     private String topicQuestion;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "question_id", nullable = false)
+    @JoinColumn(name = "topic_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Topics topic;

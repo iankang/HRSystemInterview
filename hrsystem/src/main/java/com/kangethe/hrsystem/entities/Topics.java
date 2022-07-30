@@ -8,7 +8,7 @@ public class Topics {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long topic_id;
     private String topicName;
 
     public Topics() {
@@ -19,13 +19,6 @@ public class Topics {
         this.topicName = topicName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTopicName() {
         return topicName;
@@ -38,7 +31,7 @@ public class Topics {
     @Override
     public String toString() {
         return "Topics{" +
-                "id=" + id +
+                "id=" + topic_id +
                 ", topicName='" + topicName + '\'' +
                 '}';
     }

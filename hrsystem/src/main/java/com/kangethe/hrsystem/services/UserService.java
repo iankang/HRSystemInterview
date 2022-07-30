@@ -6,8 +6,6 @@ import com.kangethe.hrsystem.entities.User;
 import com.kangethe.hrsystem.payload.requests.SignUpRequest;
 import com.kangethe.hrsystem.repositories.RoleRepository;
 import com.kangethe.hrsystem.repositories.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +25,18 @@ public class UserService {
     }
 
 
-    public User getUserByEmail(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            return userOptional.get();
-        }
-        return null;
+//    public User getUserByEmail(String email) {
+//        Optional<User> userOptional = userRepository.findByEmail(email);
+//        if (userOptional.isPresent()) {
+//            return userOptional.get();
+//        }
+//        return null;
+//    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
+
 
     public Boolean checkEmailAvailable(String email) {
         return !userRepository.existsByEmail(email);

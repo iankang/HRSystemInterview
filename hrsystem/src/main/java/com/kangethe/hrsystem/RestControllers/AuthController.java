@@ -2,6 +2,7 @@ package com.kangethe.hrsystem.RestControllers;
 
 
 import com.kangethe.hrsystem.entities.User;
+import com.kangethe.hrsystem.exception.NotFoundException;
 import com.kangethe.hrsystem.payload.requests.EmailAvailableRequest;
 import com.kangethe.hrsystem.payload.requests.SignInRequest;
 import com.kangethe.hrsystem.payload.requests.SignUpRequest;
@@ -11,12 +12,14 @@ import com.kangethe.hrsystem.security.services.UserDetailsImpl;
 import com.kangethe.hrsystem.services.AuthService;
 import com.kangethe.hrsystem.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -165,11 +168,20 @@ public class AuthController {
     public ResponseEntity<JwtAuthenticationResponse> signIn(@Valid @RequestBody SignInRequest signInRequest) {
         Authentication authentication = authService.authenticateUser(signInRequest);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        if(authentication == null) {
+            throw new NotFoundException("User is not found");
+        }
         UserDetailsImpl customUserDetails = (UserDetailsImpl) authentication.getPrincipal();
         String jwt = authService.generateToken(customUserDetails);
 //        val refreshToken = authService.createAndPersistRefreshToken(customUserDetails.username.orEmpty())
-        User user = userService.getUserByEmail(signInRequest.getEmail());
+        Optional<User> userOptional = userService.getUserByEmail(signInRequest.getEmail());
+        User user = null;
+        if (userOptional.isPresent()){
+            user = userOptional.get();
+        }
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("User Not Found");
+        }
 
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, "bearer", user));
     }
@@ -178,8 +190,6 @@ public class AuthController {
     @PostMapping("/signupForm")
     public ResponseEntity<User> signUpRequestBody(@RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("isAdmin") Boolean is_Admin, @RequestParam("isModerator") Boolean is_Moderator, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirm_password) {
         SignUpRequest signUpRequest = new SignUpRequest(username, email, password, is_Admin, is_Moderator);
-
         return authService.registerUser(signUpRequest);
-
     }
 }

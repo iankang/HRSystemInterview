@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
 
@@ -60,17 +62,14 @@ public class AuthService {
      * Authenticate user and log them in given a loginRequest
      */
     public Authentication authenticateUser(SignInRequest signInRequest) {
-        User user = userService.getUserByEmail(signInRequest.getEmail());
+        Optional<User> userOptional = userService.getUserByEmail(signInRequest.getEmail());
 
-        if (user != null) {
-            return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            user.getUsername(),
-                            signInRequest.getPassword()
-                    )
-            );
-        }
-        return  null;
+        return userOptional.map(user -> authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getUsername(),
+                        signInRequest.getPassword()
+                )
+        )).orElse(null);
     }
 //
 //
