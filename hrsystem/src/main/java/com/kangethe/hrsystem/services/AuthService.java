@@ -31,9 +31,6 @@ public class AuthService {
         this.userService = userService;
     }
 
-    //    private var emailVerificationService: EmailVerificationService,
-//    private var passwordResetService: PasswordResetService
-//
     /**
      * Generates a JWT token for the validated client
      */
@@ -71,94 +68,7 @@ public class AuthService {
                 )
         )).orElse(null);
     }
-//
-//
-//    /**
-//     * Verify email token from user
-//     *
-//     * @return
-//     */
-//    fun verifyEmailToken(token: String) {
-//        if (!emailVerificationService.tokenExists(token)) {
-//            throw NotFoundException(
-//                    "Provided token could not be found. Please request for a new verification email"
-//            )
-//        }
-//
-//
-//        val emailEntity = emailVerificationService.getVerificationEmailByToken(token)!!
-//                emailVerificationService.verifyExpiration(emailEntity)
-//
-//        val user = userService.getUserById(emailEntity.userId!!)
-//            ?: throw NotFoundException(
-//                "User not found, please contact support or request for a new verification email."
-//        )
-//
-//        user.isEmailVerified = true
-//        user.isActive = true
-//
-//        userService.save(user)
-//        emailVerificationService.remove(emailEntity)
-//    }
-//
-//    /**
-//     * Verify email token from user
-//     *
-//     * @return
-//     */
-//    fun recreateEmailVerificationToken(user: User): UserEmailVerification {
-//        var token = emailVerificationService.getVerificationEmailByUserId(user.id!!)
-//        if (token == null) {
-//            token = emailVerificationService.createVerificationToken(
-//                    user,
-//                    emailVerificationService.generateToken()
-//            )
-//        }
-//
-//        return emailVerificationService.updateExistingTokenExpiry(token)
-//    }
-//
-//    /**
-//     * Generates a password reset token from the given reset request
-//     */
-//    fun generatePasswordResetToken(userId: Long): UserPasswordReset? {
-//        if (passwordResetService.tokenExistsByUserId(userId)) {
-//            passwordResetService.remove(
-//                    passwordResetService.findByUserId(userId)!!
-//            )
-//        }
-//
-//        return passwordResetService.save(
-//                passwordResetService.createResetToken(
-//                        userId
-//                )
-//        )
-//    }
-//
-//    /**
-//     * Reset a password given a reset request and return the updated user
-//     */
-//    fun resetPassword(resetPasswordRequest: ResetPasswordRequest): User? {
-//        if (resetPasswordRequest.password.trim() != resetPasswordRequest.confirm_password.trim()) {
-//            throw BadRequestException("Passwords do not match!")
-//        }
-//
-//        val passwordResetToken = passwordResetService.findByToken(resetPasswordRequest.token)
-//                ?: throw NotFoundException(
-//                "Provided token could not be found. Please request for a new password reset"
-//        )
-//
-//        passwordResetService.verifyExpiration(passwordResetToken)
-//        val user = userService.getUserById(passwordResetToken.userId!!)
-//            ?: throw NotFoundException(
-//                "User not found, please contact support or request for a new password reset."
-//        )
-//
-//        user.password = passwordEncoder.encode(resetPasswordRequest.password)
-//
-//        passwordResetService.remove(passwordResetToken)
-//        return userService.save(user)
-//    }
+
 //
 //    fun getCurrentlyLoggedInService(): UserDetailsImpl? {
 //        return SecurityContextHolder.getContext().authentication?.principal as UserDetailsImpl ?: null

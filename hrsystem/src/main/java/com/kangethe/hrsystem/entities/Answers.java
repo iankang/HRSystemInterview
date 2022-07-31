@@ -1,7 +1,7 @@
 package com.kangethe.hrsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -19,10 +19,13 @@ public class Answers {
     private String answer;
     private Boolean isCorrect;
 
-
     @ManyToOne
     @JoinColumn(name = "question_id",nullable = false)
     private TopicQuestions question;
+
+    @OneToOne(mappedBy = "answerGiven")
+    @JsonIgnore
+    private AssessmentQuestion assessmentQuestion;
 
     public Answers(String answer, Boolean isCorrect) {
         this.answer = answer;

@@ -25,7 +25,7 @@ public class TopicQuestions {
     private String topicQuestion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Topics topic;
 
@@ -33,6 +33,9 @@ public class TopicQuestions {
     @JsonIgnore
     private Set<Answers> answers;
 
+    @OneToOne(mappedBy = "questionAsked")
+    @JsonIgnore
+    private AssessmentQuestion assessmentQuestion;
 
     public TopicQuestions() {
     }

@@ -17,9 +17,9 @@ public class Assessment extends AuditModel {
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToMany( fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-            CascadeType.PERSIST,
+                    CascadeType.PERSIST,
                     CascadeType.MERGE
             }
     )
@@ -30,14 +30,23 @@ public class Assessment extends AuditModel {
     )
     private Set<User> users = new HashSet<>();
 
-    public void addUser(User user){
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "assessment")
+    private Set<AssessmentQuestion> questions = new HashSet<>();
+
+    private Boolean isCompleted;
+    private int questionsAnswered;
+    private int totalNumberOfQuestions;
+
+    public void addUser(User user) {
         this.users.add(user);
         user.getAssessments().add(this);
     }
 
-    public void removeUser(Long userId){
+    public void removeUser(Long userId) {
         User user = this.users.stream().filter(t -> t.getId() == userId).findFirst().orElse(null);
-        if(user != null){
+        if (user != null) {
             this.users.remove(user);
             user.getAssessments().remove(this);
         }
