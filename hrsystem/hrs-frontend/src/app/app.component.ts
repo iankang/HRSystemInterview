@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from './core/_models/User';
+import { AuthService } from './modules/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'hrs-frontend';
+  currentUser: User;
+
+  constructor(
+      private router: Router,
+      private authenticationService: AuthService
+  ) {
+     
+  }
+
+
 }
