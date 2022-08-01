@@ -26,12 +26,21 @@ public class AssessmentQuestion extends AuditModel{
     @JsonIgnore
     private Assessment assessment;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "questionAsked_id")
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "assessment_question_topic_question",
+            joinColumns =
+                    { @JoinColumn(name = "assessment_question", referencedColumnName = "id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "questions_asked_id", referencedColumnName = "id") })
     private TopicQuestions questionAsked;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "AnswerGiven_id")
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "assessment_question_answer_given",
+            joinColumns =
+                    { @JoinColumn(name = "assessment_question_id", referencedColumnName = "id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "answer_given_id", referencedColumnName = "id") })
     private Answers answerGiven;
 
     private int timeTaken;

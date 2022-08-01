@@ -21,6 +21,7 @@ public class Answers {
 
     @ManyToOne
     @JoinColumn(name = "question_id",nullable = false)
+    @JsonIgnore
     private TopicQuestions question;
 
     @OneToOne(mappedBy = "answerGiven")

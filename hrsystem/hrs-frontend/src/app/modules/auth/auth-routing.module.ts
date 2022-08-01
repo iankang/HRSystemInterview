@@ -8,7 +8,6 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    
     children: [{
       path: 'landing', component: LandingComponent,
     }]

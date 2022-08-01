@@ -1,6 +1,7 @@
 package com.kangethe.hrsystem.RestControllers;
 
 import com.kangethe.hrsystem.entities.Assessment;
+import com.kangethe.hrsystem.entities.AssessmentQuestion;
 import com.kangethe.hrsystem.services.AssessmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,6 +36,11 @@ public class AssessmentController {
             @PathVariable("userId") Long userId){
         return assessmentService.getAssessmentsByUserId(userId);
     }
+    @GetMapping("/getQuestions/{assessmentId}")
+    public ResponseEntity<List<AssessmentQuestion>> getAskedQuestions(
+            @PathVariable("assessmentId") Long assessmentId){
+        return assessmentService.getAssessmentQuestionById(assessmentId);
+    }
 
     @Operation(summary = "Add assessment", description = "Adds an assessment", tags = {"Assessments"})
     @PostMapping
@@ -43,6 +49,20 @@ public class AssessmentController {
             @RequestParam("userId") Long userId
     ){
         return assessmentService.createAssessment(userId);
+    }
+    @Operation(summary = "Answer Question", description = "Answers a question in assessment", tags = {"Assessments"})
+    @PostMapping("/assessment/{assessmentId}/{assessmentQuestionId}/answer/{answerId}")
+    public ResponseEntity<AssessmentQuestion> answerQuestion(
+            @Parameter(description = "id of assessment  you want to answer questions for.")
+            @PathVariable("assessmentId") Long assessmentId,
+            @Parameter(description = "id of assessment question you want to answer.")
+            @PathVariable("assessmentQuestionId") Long assessmentQuestionId,
+            @Parameter(description = "id of answer you want to provide")
+            @PathVariable("answerId") Long answerId,
+            @Parameter(description = "time taken to answer the question")
+            @RequestParam("time_taken") int timeTaken
+            ){
+        return assessmentService.answerQuestion(assessmentId,assessmentQuestionId, answerId, timeTaken);
     }
 
     @Operation(summary = "Remove assessment", description = "Removes an assessment", tags = {"Assessments"})

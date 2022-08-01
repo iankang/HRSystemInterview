@@ -30,7 +30,6 @@ public class TopicQuestions {
     private Topics topic;
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JsonIgnore
     private Set<Answers> answers;
 
     @OneToOne(mappedBy = "questionAsked")
