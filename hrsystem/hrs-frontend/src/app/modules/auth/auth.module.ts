@@ -6,13 +6,15 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     LoginComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    LandingComponent
   ],
   imports: [
     CommonModule,

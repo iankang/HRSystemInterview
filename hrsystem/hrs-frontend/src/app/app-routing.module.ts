@@ -4,7 +4,7 @@ import { HomeComponent } from './modules/auth/home/home.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HomeComponent, },
   { path: 'login', component: LoginComponent },
 
   // otherwise redirect to home
