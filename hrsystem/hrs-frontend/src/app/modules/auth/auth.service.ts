@@ -19,9 +19,9 @@ const USER = 'user';
 })
 export class AuthService {
 
-  BASE_URL = "https://developers.lunna.chat:8084"
-  AUTH_API = `${this.BASE_URL}/auth/signin`;
-  SIGN_UP = `${this.BASE_URL}/auth/signup`;
+  BASE_URL = "http://localhost:8089"
+  AUTH_API = `${this.BASE_URL}/api/auth/signin`;
+  SIGN_UP = `${this.BASE_URL}/api/auth/signupForm`;
   RESET_PASSWORD = `${this.BASE_URL}/auth/password/reset`;
   VERIFY_ACCOUNT = `${this.BASE_URL}/auth/email/verification`;
   RESEND_EMAIL = `${this.BASE_URL}/auth/email/verification/resend`;
@@ -68,8 +68,8 @@ export class AuthService {
   }
 
 
-  login(identifier: string, password: string): Observable<any> {
-    return this.http.post<User>(this.AUTH_API, {identifier, password}, this.httpOptions)
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<User>(this.AUTH_API, {email, password}, this.httpOptions)
       .pipe(map(user => {
         console.log(user);
         localStorage.setItem('user', JSON.stringify(user));

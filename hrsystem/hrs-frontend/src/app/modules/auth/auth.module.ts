@@ -5,8 +5,9 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { LandingComponent } from './landing/landing.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -19,6 +20,8 @@ import { LandingComponent } from './landing/landing.component';
   imports: [
     CommonModule,
     MatSidenavModule,
+    FormsModule,
+    ReactiveFormsModule,
     AuthRoutingModule
   ]
 })

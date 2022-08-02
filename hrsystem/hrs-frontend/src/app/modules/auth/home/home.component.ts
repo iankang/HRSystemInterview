@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  username: string | undefined = "";
+  email: string | undefined = "";
+  profilePic: string | undefined;
+
+  constructor(
+    public router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.authService.userStored();
+  }
+
+  logout():void{
+    this.authService.logout();
+    window.location.reload();
   }
 
 }
