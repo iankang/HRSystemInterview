@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col text-center p-4 ">
+      <h2>Assessments</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile *ngFor="let assessment of assessments">
+        <mat-card class="example-card">
+          <mat-card-subtitle>#{{assessment.id}}</mat-card-subtitle>
+          <!-- <mat-card-title>Shiba Inu</mat-card-title> -->
+          <mat-card-content>
+            <p>Questions Answered: {{assessment.questionsAnswered}}</p>
+            <p>Total Questions: {{assessment.totalNumberOfQuestions}}</p>
+          </mat-card-content>
+          <mat-divider inset></mat-divider>
+          <mat-card-actions>
+            <div *ngIf="assessment.isCompleted; else notShow">
+              <p>Completed: <i class="fas fa-thumbs-up"></i></p>
+            </div>
+
+            <ng-template #notShow>
+         
+                <p>Completed: <i class="fas fa-thumbs-down"></i></p>
+              
+            </ng-template>
+
+          </mat-card-actions>
+        </mat-card>
+
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <div class="row">
+    <div class="col text-center">
+      <button class="btn btn-dark" (click)="createAssessment()">Add Assessment <i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+</div>
