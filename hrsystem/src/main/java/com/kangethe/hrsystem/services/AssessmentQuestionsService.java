@@ -36,6 +36,7 @@ public class AssessmentQuestionsService {
         Assessment assessment = assessmentRepository.findById(assessmentID).orElseThrow(() -> new NoSuchElementException("Assessment with id: "+assessmentID+" Not Found"));
         for(TopicQuestions question : getAllQuestions()){
             AssessmentQuestion assessmentQuestion = new AssessmentQuestion();
+
             assessmentQuestion.setAssessment(assessment);
             assessmentQuestion.setQuestionAsked(question);
             assessmentQuestions.add(assessmentQuestion);

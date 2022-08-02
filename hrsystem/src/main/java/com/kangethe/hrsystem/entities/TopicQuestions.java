@@ -23,7 +23,7 @@ public class TopicQuestions {
     private Long id;
 
     private String topicQuestion;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
@@ -32,7 +32,14 @@ public class TopicQuestions {
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Answers> answers;
 
-    @OneToOne(mappedBy = "questionAsked")
+
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "assessment_question_topic_question",
+            joinColumns =
+                    { @JoinColumn(name = "assessment_question", referencedColumnName = "id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "questions_asked_id", referencedColumnName = "id") })
     @JsonIgnore
     private AssessmentQuestion assessmentQuestion;
 

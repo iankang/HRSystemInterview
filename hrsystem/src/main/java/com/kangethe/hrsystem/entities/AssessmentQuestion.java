@@ -3,8 +3,6 @@ package com.kangethe.hrsystem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -14,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class AssessmentQuestion extends AuditModel{
+public class AssessmentQuestion extends AuditModel {
 
     @Id
     @Setter(AccessLevel.NONE)
@@ -27,20 +25,11 @@ public class AssessmentQuestion extends AuditModel{
     private Assessment assessment;
 
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinTable(name = "assessment_question_topic_question",
-            joinColumns =
-                    { @JoinColumn(name = "assessment_question", referencedColumnName = "id") },
-            inverseJoinColumns =
-                    { @JoinColumn(name = "questions_asked_id", referencedColumnName = "id") })
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_asked_id", nullable = false)
     private TopicQuestions questionAsked;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinTable(name = "assessment_question_answer_given",
-            joinColumns =
-                    { @JoinColumn(name = "assessment_question_id", referencedColumnName = "id") },
-            inverseJoinColumns =
-                    { @JoinColumn(name = "answer_given_id", referencedColumnName = "id") })
+    @OneToOne(mappedBy = "assessmentQuestion")
     private Answers answerGiven;
 
     private int timeTaken;

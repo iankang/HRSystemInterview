@@ -24,7 +24,12 @@ public class Answers {
     @JsonIgnore
     private TopicQuestions question;
 
-    @OneToOne(mappedBy = "answerGiven")
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "assessment_question_answer_given",
+            joinColumns =
+                    { @JoinColumn(name = "assessment_question_id", referencedColumnName = "id") },
+            inverseJoinColumns =
+                    { @JoinColumn(name = "answer_given_id", referencedColumnName = "id") })
     @JsonIgnore
     private AssessmentQuestion assessmentQuestion;
 
