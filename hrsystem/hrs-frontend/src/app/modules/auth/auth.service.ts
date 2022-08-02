@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   public userStored(): User| null {
-    let user = JSON.parse(localStorage.getItem(USER)!!);
+    let user = JSON.parse(localStorage.getItem(USER));
     if(user) {
       this.isLoggedIn = true;
       user?.user?.roles?.forEach((value: Role) => {

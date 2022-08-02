@@ -7,7 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { LandingComponent } from './landing/landing.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatGridListModule } from '@angular/material/grid-list';
+import { AssessmentsModule } from '../assessments/assessments.module';
 
 
 @NgModule({
@@ -22,7 +24,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatSidenavModule,
     FormsModule,
     ReactiveFormsModule,
-    AuthRoutingModule
+    MatGridListModule,
+    AssessmentsModule,
+    AuthRoutingModule,
+
   ]
 })
 export class AuthModule { }

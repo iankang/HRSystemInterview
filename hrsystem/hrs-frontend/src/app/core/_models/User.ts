@@ -27,13 +27,8 @@
   export class UserDev {
     username?: string;
     email?: string;
-    password?: string;
     roles?: Role[];
-    isEmailVerified?: boolean;
-    isActive?: boolean;
     id?: number;
-    devProfPicUrl?: any;
-    userProfile?: UserProfile;
   }
 
   export class User {

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AssessmentsAllComponent } from '../assessments/assessments-all/assessments-all.component';
 import { GuardGuard } from './guard.guard';
 import { HomeComponent } from './home/home.component';
 import { LandingComponent } from './landing/landing.component';
@@ -11,9 +12,14 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     canActivate: [GuardGuard],
-    children: [{
+    children: [
+      {
       path: 'landing', component: LandingComponent,
-    }]
+      },
+      {
+        path: 'assessments', component: AssessmentsAllComponent
+      }
+  ]
   },
 
   { path: 'login', component: LoginComponent },

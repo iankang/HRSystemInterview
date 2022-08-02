@@ -19,6 +19,8 @@ export class GuardGuard implements CanActivate, CanActivateChild {
 
   checkLogin(url:string):true|UrlTree{
 
+    this.authService.userStored();
+    
     if(this.authService.isLoggedIn){
       return  true;
     }
