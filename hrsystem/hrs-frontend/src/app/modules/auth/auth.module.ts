@@ -10,6 +10,7 @@ import { LandingComponent } from './landing/landing.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AssessmentsModule } from '../assessments/assessments.module';
+import { AlertModule } from 'src/app/core/alert/alert.module';
 
 
 @NgModule({
@@ -26,8 +27,8 @@ import { AssessmentsModule } from '../assessments/assessments.module';
     ReactiveFormsModule,
     MatGridListModule,
     AssessmentsModule,
+    AlertModule,
     AuthRoutingModule,
-
   ]
 })
 export class AuthModule { }

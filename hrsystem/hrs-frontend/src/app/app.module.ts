@@ -14,6 +14,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtInterceptor } from './core/_helpers/JwtInterceptor';
 import { ErrorInterceptor } from './core/_helpers/ErrorInterceptor';
+import { AlertModule } from './core/alert/alert.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ErrorInterceptor } from './core/_helpers/ErrorInterceptor';
     MatToolbarModule,
     BrowserAnimationsModule,
     NgbModule,
+    AlertModule,
     AppRoutingModule
   ],
   providers: [

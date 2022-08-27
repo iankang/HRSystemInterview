@@ -6,6 +6,7 @@ import { AuthService } from '../auth.service';
 import { first } from "rxjs";
 import { data } from "autoprefixer";
 import { User } from 'src/app/core/_models/User';
+import { AlertService } from 'src/app/core/alert/alert.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit {
         },
         error: error => {
           console.log('err: ' + error.message);
+          this.alertService.error(error);
           // this.handleErrors.handleErrors(error.status,{ id: 'login-err', fade: true, autoClose: true})
           this.loading = false;
         }

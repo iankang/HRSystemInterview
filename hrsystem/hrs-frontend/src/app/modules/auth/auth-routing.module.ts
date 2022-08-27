@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GuardGuard } from 'src/app/core/_guards/guard.guard';
 import { AssessmentsAllComponent } from '../assessments/assessments-all/assessments-all.component';
-import { GuardGuard } from './guard.guard';
+
 import { HomeComponent } from './home/home.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
