@@ -48,10 +48,6 @@ public class AuthService {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
 
-        if (!userService.checkUsernameAvailable(signupRequest.getUsername())) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
-        }
-
         return ResponseEntity.ok(userService.save(userService.createUser(signupRequest)));
     }
 
@@ -63,7 +59,7 @@ public class AuthService {
 
         return userOptional.map(user -> authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
+                        user.getEmail(),
                         signInRequest.getPassword()
                 )
         )).orElse(null);

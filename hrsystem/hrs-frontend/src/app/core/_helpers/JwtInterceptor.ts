@@ -3,7 +3,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 
 import {Observable} from "rxjs";
 import { environment } from "src/environments/environment";
-import { AuthService } from "src/app/modules/auth/auth.service";
+import { AuthService } from "../_services/auth.service";
 
 
 @Injectable()

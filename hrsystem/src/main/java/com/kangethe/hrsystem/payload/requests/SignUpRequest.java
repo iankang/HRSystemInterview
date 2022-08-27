@@ -7,9 +7,6 @@ import java.util.Set;
 
 
 public class SignUpRequest {
-    @NotBlank
-    @Size(min = 3, max = 20)
-    private String username;
 
     @NotBlank
     @Size(max = 50)
@@ -25,20 +22,11 @@ public class SignUpRequest {
     private Boolean isAdmin;
     private Boolean isModerator;
 
-    public SignUpRequest(String username, String email,  String password, Boolean isAdmin, Boolean isModerator) {
-        this.username = username;
+    public SignUpRequest( String email,  String password, Boolean isAdmin, Boolean isModerator) {
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
         this.isModerator = isModerator;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -81,15 +69,5 @@ public class SignUpRequest {
         isModerator = moderator;
     }
 
-    @Override
-    public String toString() {
-        return "SignUpRequest{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", password='" + password + '\'' +
-                ", isAdmin=" + isAdmin +
-                ", isModerator=" + isModerator +
-                '}';
-    }
+
 }

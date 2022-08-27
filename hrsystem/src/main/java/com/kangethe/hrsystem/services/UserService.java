@@ -43,11 +43,7 @@ public class UserService {
     }
 
     public User createUser(SignUpRequest signUpRequest) {
-        return new User(signUpRequest.getUsername().trim(), signUpRequest.getEmail().trim(), passwordEncoder.encode(signUpRequest.getPassword().trim()), setRolesForNewUser(signUpRequest.getModerator(), signUpRequest.getAdmin()), false, false);
-    }
-
-    public Boolean checkUsernameAvailable(String username) {
-        return !userRepository.existsByUsername(username);
+        return new User( signUpRequest.getEmail().trim(), passwordEncoder.encode(signUpRequest.getPassword().trim()), setRolesForNewUser(signUpRequest.getModerator(), signUpRequest.getAdmin()), false, false);
     }
 
     public Set<Role> setRolesForNewUser(Boolean isModerator, Boolean isAdmin) {

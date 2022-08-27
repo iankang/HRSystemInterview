@@ -73,8 +73,8 @@ public class AuthController {
 
     @Operation(summary = "sign up a new user", description = "Signs Up a new User", tags = {"Authentication"})
     @PostMapping("/signupForm")
-    public ResponseEntity<User> signUpRequestBody(@RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("isAdmin") Boolean is_Admin, @RequestParam("isModerator") Boolean is_Moderator, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirm_password) {
-        SignUpRequest signUpRequest = new SignUpRequest(username, email, password, is_Admin, is_Moderator);
+    public ResponseEntity<User> signUpRequestBody(@RequestParam("email") String email, @RequestParam("isAdmin") Boolean is_Admin, @RequestParam("isModerator") Boolean is_Moderator, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirm_password) {
+        SignUpRequest signUpRequest = new SignUpRequest( email, password, is_Admin, is_Moderator);
         return authService.registerUser(signUpRequest);
     }
 }

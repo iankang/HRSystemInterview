@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/core/_services/token-storage.service';
-import { AuthService } from '../auth.service';
 import { first } from "rxjs";
 import { data } from "autoprefixer";
 import { User } from 'src/app/core/_models/User';
 import { AlertService } from 'src/app/core/alert/alert.service';
+import { AuthService } from 'src/app/core/_services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

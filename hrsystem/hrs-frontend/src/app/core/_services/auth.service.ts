@@ -6,8 +6,10 @@ import { Role, User } from 'src/app/core/_models/User';
 
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-import { LoginRequest } from './login/LoginRequest';
-import { UserRegistration } from './user-registration/UserRegistration';
+import { LoginRequest } from '../_models/LoginRequest';
+import { UserRegistration } from '../_models/UserRegistration';
+
+
 
 
 const TOKEN_KEY = 'auth-token';

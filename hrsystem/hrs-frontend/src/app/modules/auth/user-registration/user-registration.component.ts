@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AuthService } from '../auth.service';
-import { UserRegistration } from './UserRegistration';
+import { AlertService } from 'src/app/core/alert/alert.service';
+import { AuthService } from 'src/app/core/_services/auth.service';
+import { UserRegistration } from '../../../core/_models/UserRegistration';
 
 @Component({
   selector: 'app-user-registration',
@@ -25,6 +26,7 @@ export class UserRegistrationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private alertService:AlertService
   ) { }
 
 
@@ -50,7 +52,6 @@ export class UserRegistrationComponent implements OnInit {
       const userRegistration: UserRegistration = new UserRegistration(
         this.f['password'].value,
         this.f['confirmPassword'].value,
-        'username',
         this.f['email'].value,
         this.f['firstName'].value,
         this.f['lastName'].value,
@@ -65,6 +66,7 @@ export class UserRegistrationComponent implements OnInit {
             this.router.navigate(['../verify'], { relativeTo: this.route });
           }, error: error => {
             this.loading = false;
+            this.alertService.error(error);
             // this.handleError.handleErrors(error.status, {id: 'registration-err', autoClose: true, fade: true});
           }
         })

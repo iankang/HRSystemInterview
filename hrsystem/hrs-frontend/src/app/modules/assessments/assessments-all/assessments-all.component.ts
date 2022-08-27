@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/core/_models/User';
-import { AuthService } from '../../auth/auth.service';
 import { AssessmentsService } from '../assessments.service';
 import { first } from "rxjs";
 import { data } from "autoprefixer";
 import { Assessment } from 'src/app/core/_models/Assessment';
+import { AuthService } from 'src/app/core/_services/auth.service';
 
 @Component({
   selector: 'app-assessments-all',

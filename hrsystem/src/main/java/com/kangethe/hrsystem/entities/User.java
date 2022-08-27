@@ -18,7 +18,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users",
     uniqueConstraints = {
-            @UniqueConstraint(columnNames = "username"),
             @UniqueConstraint(columnNames = "email")
 })
 @Getter
@@ -30,10 +29,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotBlank
-    @Size(max = 20)
-    private String username;
 
     @NotBlank
     @Size(max = 50)
@@ -63,8 +58,7 @@ public class User implements Serializable {
     private Set<Assessment> assessments = new HashSet<>();
 
 
-    public User( String username, String email, String password, Set<Role> roles, Boolean isEmailVerified, Boolean isActive) {
-        this.username = username;
+    public User( String email, String password, Set<Role> roles, Boolean isEmailVerified, Boolean isActive) {
         this.email = email;
         this.password = password;
         this.roles = roles;
