@@ -1,42 +1,69 @@
+
 <div class="container">
-  <div class="row">
-    <div class="col text-center p-4 ">
-      <h2>Assessments</h2>
+
+  <div class="row justify-content-center">
+    <!-- /.card -->
+    <div class="col-md-8 mt-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h3 class="card-title col">Assessments</h3>
+          <button type="button" class="col-3 btn  btn-sm  btn-primary">Add Assessment</button>
+          <!-- <div class="card-tools">
+            <ul class="pagination pagination-sm float-right">
+              <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+            </ul>
+          </div> -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <ng-container *ngIf="assessments">
+            <ng-container *ngIf="assessments.length > 0 else emptyAssessments">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Assesment Id</th>
+                    <th>Questions Answered</th>
+                    <th>Total Questions</th>
+                    <th>Progress</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of assessments">
+                    <td>{{item.id}}</td>
+                    <td>{{item.questionsAnswered}}</td>
+                    <td>{{item.totalNumberOfQuestions}}</td>
+                  
+                    <td> 
+                      <mat-slide-toggle
+                      class="example-margin"
+                      color="my-accent"
+                      [checked]="item.isCompleted"
+                      [disabled]="true">
+                    Completed
+                  </mat-slide-toggle></td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+           
+          </ng-container>
+       
+        </div>
+        <!-- /.card-body -->
+      </div>
     </div>
-  </div>
-
-  <div class="row">
-    <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile *ngFor="let assessment of assessments">
-        <mat-card class="example-card">
-          <mat-card-subtitle>#{{assessment.id}}</mat-card-subtitle>
-          <!-- <mat-card-title>Shiba Inu</mat-card-title> -->
-          <mat-card-content>
-            <p>Questions Answered: {{assessment.questionsAnswered}}</p>
-            <p>Total Questions: {{assessment.totalNumberOfQuestions}}</p>
-          </mat-card-content>
-          <mat-divider inset></mat-divider>
-          <mat-card-actions>
-            <div *ngIf="assessment.isCompleted; else notShow">
-              <p>Completed: <i class="fas fa-thumbs-up"></i></p>
-            </div>
-
-            <ng-template #notShow>
-         
-                <p>Completed: <i class="fas fa-thumbs-down"></i></p>
-              
-            </ng-template>
-
-          </mat-card-actions>
-        </mat-card>
-
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
-
-  <div class="row">
-    <div class="col text-center">
-      <button class="btn btn-dark" (click)="createAssessment()">Add Assessment <i class="fas fa-plus"></i></button>
+    <!-- /.card -->
     </div>
-  </div>
 </div>
+
+<ng-template #emptyAssessments>
+  <div class="callout callout-info">
+    <h5>No Assessments available </h5>
+
+    <p>Add assessment to continue.</p>
+  </div>
+</ng-template>

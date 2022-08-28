@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/core/_services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   form!: FormGroup;
   errorMessage = '';
@@ -36,21 +36,21 @@ export class LoginComponent implements OnInit {
     });
    }
 
-  ngOnInit(): void {
+  // ngOnInit(): void {
     
 
-    if (this.tokenStorage.getToken()) {
+  //   if (this.tokenStorage.getToken()) {
 
-      this.roles = this.tokenStorage.getUser().roles;
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl']
-    }
+  //     this.roles = this.tokenStorage.getUser().roles;
+  //     this.returnUrl = this.route.snapshot.queryParams['returnUrl']
+  //   }
 
-    this.authService.userStored();
-    // if ( this.authService.isAdmin ){
-    //   this.router.navigate(['/admin']);
-    // }
-    this.router.navigate(['/']);
-  }
+  //   this.authService.userStored();
+  //   // if ( this.authService.isAdmin ){
+  //   //   this.router.navigate(['/admin']);
+  //   // }
+  //   this.router.navigate(['/']);
+  // }
 
   get f() {
     return this.form.controls;
@@ -75,9 +75,16 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (user: User) => {
           console.log(data.toString());
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+          var returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.authService.userStored();
+          for (let role of user.user.roles) {
+            if (role.name === 'ROLE_ADMIN') {
+              console.log('nimepata');
+             this.router.navigate(['/admin']);
+            } else {
+              this.router.navigateByUrl(returnUrl);
+            }
+          }
           this.reloadPage()
 
         },
@@ -94,6 +101,5 @@ export class LoginComponent implements OnInit {
     if (this.returnUrl){
       this.router.navigate([this.returnUrl]);
     }
-    
   }
 }

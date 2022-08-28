@@ -24,6 +24,7 @@ export class GuardGuard implements CanActivate, CanActivateChild {
     this.authService.userStored();
     
     if(this.authService.isLoggedIn){
+      
       return  true;
     }
     this.authService.redirectUrl = url;

@@ -19,10 +19,13 @@ export class RoleGuard implements CanActivate, CanActivateChild {
       const expectedRole:string = route.data['expectedRole'];
       const user = this.auth.userStored();
     
-      if(this.auth.isLoggedIn || user.user.roles['name'].includes(expectedRole)){
-        console.log('isAdmin');
-         this.router.navigate(['/admin']);
-        return true;
+      if(this.auth.isLoggedIn){
+        for( let role of user.user.roles){
+          if (role.name == expectedRole){
+            console.log('expected role is: '+ role);
+            return true;
+          }
+        }
       }
       this.router.navigate(['/']);
       return  false;

@@ -15,7 +15,6 @@ const routes: Routes = [
     component: HomeComponent,
     canActivateChild: [GuardGuard],
     children: [
-      
       {
       path: '', component: LandingComponent,
       },
@@ -28,7 +27,9 @@ const routes: Routes = [
         }
       },
       {
-        path: 'assessments', component: AssessmentsAllComponent
+        path:'assessments',
+        component: AssessmentsAllComponent,
+        canActivateChild:[GuardGuard]
       }
   ]
   },
