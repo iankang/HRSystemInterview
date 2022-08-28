@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       this.returnUrl = this.route.snapshot.queryParams['returnUrl']
     }
 
-    this.returnUrl = '/assessments';
+    this.returnUrl = '/';
   }
 
   get f() {

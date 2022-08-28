@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AssessmentsModule } from '../assessments/assessments.module';
 import { AlertModule } from 'src/app/core/alert/alert.module';
+import { CommonComponentsModule } from 'src/app/core/common-components/common-components.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { AlertModule } from 'src/app/core/alert/alert.module';
     MatGridListModule,
     AssessmentsModule,
     AlertModule,
+    CommonComponentsModule,
     AuthRoutingModule,
   ]
 })

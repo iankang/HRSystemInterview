@@ -6,11 +6,6 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { UserRegistration } from './core/_models/UserRegistration';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-    canActivate: [GuardGuard]
-  },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: UserRegistration },
   // otherwise redirect to home

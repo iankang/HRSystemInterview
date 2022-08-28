@@ -61,12 +61,12 @@ export class UserRegistrationComponent implements OnInit {
       this.authService.register(userRegistration)
         .pipe(first())
         .subscribe({
-          next: () => {
+          next: data => {
             // this.alertsService.success('Registration Successful', {keepAfterRouteChange: true});
             this.router.navigate(['../verify'], { relativeTo: this.route });
           }, error: error => {
             this.loading = false;
-            this.alertService.error(error);
+            this.alertService.error(error.message);
             // this.handleError.handleErrors(error.status, {id: 'registration-err', autoClose: true, fade: true});
           }
         })

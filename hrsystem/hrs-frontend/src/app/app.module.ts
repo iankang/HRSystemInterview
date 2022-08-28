@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { JwtInterceptor } from './core/_helpers/JwtInterceptor';
 import { ErrorInterceptor } from './core/_helpers/ErrorInterceptor';
 import { AlertModule } from './core/alert/alert.module';
+import { CommonComponentsModule } from './core/common-components/common-components.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AlertModule } from './core/alert/alert.module';
     BrowserAnimationsModule,
     NgbModule,
     AlertModule,
+    CommonComponentsModule,
     AppRoutingModule
   ],
   providers: [

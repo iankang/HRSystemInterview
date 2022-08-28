@@ -27,7 +27,7 @@ export class GuardGuard implements CanActivate, CanActivateChild {
       return  true;
     }
     this.authService.redirectUrl = url;
-    return  this.router.parseUrl('/login')
+    return  this.router.parseUrl('/login');
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):  true | UrlTree {

@@ -15,7 +15,7 @@ const routes: Routes = [
     canActivate: [GuardGuard],
     children: [
       {
-      path: 'landing', component: LandingComponent,
+      path: '', component: LandingComponent,
       },
       {
         path: 'assessments', component: AssessmentsAllComponent

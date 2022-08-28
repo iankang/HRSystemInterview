@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Role, User } from 'src/app/core/_models/User';
@@ -87,7 +87,15 @@ export class AuthService {
   }
 
   register(userRegistration: UserRegistration) {
-    return this.http.post(this.SIGN_UP, userRegistration);
+
+    var httpParams = new HttpParams()
+    .set("email", userRegistration.email)
+    .set("isAdmin",false)
+    .set("isModerator",false)
+    .set("password",userRegistration.password)
+    .set("confirmPassword",userRegistration.confirm_password);
+
+    return this.http.post(this.SIGN_UP, httpParams);
   }
 
 
