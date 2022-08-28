@@ -28,20 +28,28 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private alertService: AlertService
-  ) { }
+  ) {
 
-  ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
+   }
+
+  ngOnInit(): void {
+    
 
     if (this.tokenStorage.getToken()) {
+
       this.roles = this.tokenStorage.getUser().roles;
       this.returnUrl = this.route.snapshot.queryParams['returnUrl']
     }
 
-    this.returnUrl = '/';
+    this.authService.userStored();
+    // if ( this.authService.isAdmin ){
+    //   this.router.navigate(['/admin']);
+    // }
+    this.router.navigate(['/']);
   }
 
   get f() {
@@ -67,8 +75,8 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (user: User) => {
           console.log(data.toString());
-          // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          // this.router.navigateByUrl(returnUrl);
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigateByUrl(returnUrl);
           this.authService.userStored();
           this.reloadPage()
 
@@ -83,6 +91,9 @@ export class LoginComponent implements OnInit {
   }
 
   reloadPage(): void {
-    this.router.navigate([this.returnUrl]);
+    if (this.returnUrl){
+      this.router.navigate([this.returnUrl]);
+    }
+    
   }
 }
