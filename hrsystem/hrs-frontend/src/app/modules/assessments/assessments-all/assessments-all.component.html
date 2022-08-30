@@ -7,7 +7,7 @@
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h3 class="card-title col">Assessments</h3>
-          <button type="button" class="col-3 btn  btn-sm  btn-primary">Add Assessment</button>
+          <button type="button" class="col-3 btn  btn-sm  btn-primary" (click)="createAssessment()">Add Assessment</button>
           <!-- <div class="card-tools">
             <ul class="pagination pagination-sm float-right">
               <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
@@ -43,8 +43,16 @@
                       color="my-accent"
                       [checked]="item.isCompleted"
                       [disabled]="true">
-                    Completed
-                  </mat-slide-toggle></td>
+                        Completed
+                      </mat-slide-toggle>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/assessment', item.id]">
+                        <button  type="button" class="btn  btn-sm  btn-primary"> 
+                          Take Assessment
+                        </button>
+                      </a>
+                    </td>
                   </tr>
                 </tbody>
               </table>

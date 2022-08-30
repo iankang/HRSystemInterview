@@ -29,7 +29,18 @@ export class AssessmentsAllComponent implements OnInit {
   }
 
   createAssessment(){
-    this.assessmentService.createAssessment(this.user.user.id.toString());
+    this.assessmentService.createAssessment(this.user.user.id.toString())
+    .pipe(first())
+    .subscribe({
+      next:data =>{
+
+        this.alertService.success('assessment added');
+      },
+      error:error =>{
+
+        this.alertService.error(error.message);
+      }
+    });
   }
 
   public getAssessments() {
@@ -54,5 +65,9 @@ export class AssessmentsAllComponent implements OnInit {
         // this.loading = false;
       }
     });
+  }
+
+  public takeAssessment(id: number){
+    console.log("clicked "+ id);
   }
 }
