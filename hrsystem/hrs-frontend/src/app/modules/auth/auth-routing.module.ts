@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoleGuard } from 'src/app/core/_guards/adminrole.guard';
 import { GuardGuard } from 'src/app/core/_guards/guard.guard';
 import { AdminComponent } from '../admin/admin/admin.component';
+import { AssessmentDetailComponent } from '../assessments/assessment-detail/assessment-detail.component';
 import { AssessmentsAllComponent } from '../assessments/assessments-all/assessments-all.component';
 
 import { HomeComponent } from './home/home.component';
@@ -29,7 +30,14 @@ const routes: Routes = [
       {
         path:'assessments',
         component: AssessmentsAllComponent,
-        canActivateChild:[GuardGuard]
+        canActivateChild:[GuardGuard],
+        children:[
+         
+        ]
+      },
+      {
+        path:'assessment/:id',
+        component: AssessmentDetailComponent
       }
   ]
   },
