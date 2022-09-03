@@ -34,6 +34,6 @@ export class AssessmentsService {
 
   getAssesmentById(assessmentId: number) {
    
-    return this.http.get<Questions>(this.GET_QUESTIONS_URL+assessmentId);
+    return this.http.get<Questions[]>(this.GET_QUESTIONS_URL+assessmentId);
   }
 }

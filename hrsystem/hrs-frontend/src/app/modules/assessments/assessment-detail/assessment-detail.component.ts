@@ -4,6 +4,7 @@ import { AssessmentsService } from 'src/app/core/_services/assessments.service';
 import { first } from "rxjs";
 import { AlertService } from 'src/app/core/alert/alert.service';
 import { Validators, FormBuilder } from '@angular/forms';
+import { Questions } from 'src/app/core/_models/Questions';
 
 @Component({
   selector: 'app-assessment-detail',
@@ -20,6 +21,9 @@ export class AssessmentDetailComponent implements OnInit {
     secondCtrl: ['', Validators.required],
   });
   isEditable = false;
+  questions:Questions[];
+  currentQuestion : Questions;
+  currentIndex: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,13 +44,35 @@ export class AssessmentDetailComponent implements OnInit {
     .subscribe({
       next:data =>{
         console.log(JSON.stringify(data));
+        this.questions = data;
+        this.currentQuestion = data[this.currentIndex];
       },
       error:error =>{
         console.log('error: '+error);
       }
     });
   }
-
-  
-
+  public getPreviousQuestion(){
+    console.log('currentIndex: ', this.currentIndex);
+    if(this.currentIndex < this.questions.length  && this.currentIndex > 0){
+      this.currentIndex-=1;
+      this.currentQuestion = this.questions[this.currentIndex];
+   
+    } else {
+      this.currentIndex = 0;
+    }
+    
+  }
+  public getNextQuestion(){
+    console.log('currentIndex: ', this.currentIndex);
+    if(this.currentIndex < this.questions.length  && this.currentIndex >= 0){
+      this.currentIndex+=1;
+      this.currentQuestion = this.questions[this.currentIndex];
+ 
+    } else {
+      this.currentIndex = 0;
+    }
+   
+  }
+ 
 }

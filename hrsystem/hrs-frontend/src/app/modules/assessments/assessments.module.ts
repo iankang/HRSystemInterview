@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import {CdkStepperModule} from '@angular/cdk/stepper';
+import {MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     AssessmentsAllComponent,
@@ -34,7 +35,8 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
-    CdkStepperModule
+    CdkStepperModule,
+    MatRadioModule
   ]
 })
 export class AssessmentsModule { }

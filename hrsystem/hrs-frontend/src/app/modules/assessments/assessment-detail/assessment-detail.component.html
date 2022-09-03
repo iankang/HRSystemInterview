@@ -1,6 +1,35 @@
 
-<mat-stepper #stepper>
+<!-- <mat-stepper #stepper>
     <mat-step>
         <app-question-form></app-question-form>
     </mat-step>
-</mat-stepper>
+</mat-stepper> -->
+<div class="row justify-content-center ">
+    <div class="col-4 mt-4">
+        <mat-card class="example-card">
+            <mat-card-title>{{currentQuestion.questionAsked.topicQuestion}}</mat-card-title>
+            <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+            <mat-card-content>
+                <div class="row">
+
+              <div class="col">
+
+           
+                <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                [(ngModel)]="currentQuestion.questionAsked.answers">
+                <mat-radio-button class="example-radio-button" *ngFor="let answer of currentQuestion.questionAsked.answers" [value]="answer">
+                  {{answer.answer}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button (click)="getPreviousQuestion()">previous</button>
+              <button mat-button (click)="getNextQuestion()">next</button>
+            </mat-card-actions>
+          </mat-card>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import { CdkStepper } from '@angular/cdk/stepper';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Questions } from 'src/app/core/_models/Questions';
 
 @Component({
   selector: 'app-question-form',
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionFormComponent extends CdkStepper {
 
+  
   ngOnInit(): void {
   }
 
