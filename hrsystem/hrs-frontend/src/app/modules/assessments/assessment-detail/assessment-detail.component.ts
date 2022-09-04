@@ -36,6 +36,7 @@ export class AssessmentDetailComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
 
     this.getAssessment();
+    this.currentIndex = 0;
   }
 
   public getAssessment(){
@@ -55,22 +56,24 @@ export class AssessmentDetailComponent implements OnInit {
   public getPreviousQuestion(){
     console.log('currentIndex: ', this.currentIndex);
     if(this.currentIndex < this.questions.length  && this.currentIndex > 0){
-      this.currentIndex-=1;
+      this.currentIndex--;
       this.currentQuestion = this.questions[this.currentIndex];
    
     } else {
       this.currentIndex = 0;
+      this.currentQuestion = this.questions[this.currentIndex];
     }
     
   }
   public getNextQuestion(){
     console.log('currentIndex: ', this.currentIndex);
-    if(this.currentIndex < this.questions.length  && this.currentIndex >= 0){
-      this.currentIndex+=1;
+    if(this.currentIndex < this.questions.length - 1 && this.currentIndex >= 0 ){
+      this.currentIndex++;
       this.currentQuestion = this.questions[this.currentIndex];
  
     } else {
       this.currentIndex = 0;
+      this.currentQuestion = this.questions[this.currentIndex];
     }
    
   }
