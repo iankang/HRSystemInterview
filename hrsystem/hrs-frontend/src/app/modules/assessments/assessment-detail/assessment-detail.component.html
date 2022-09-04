@@ -6,6 +6,8 @@
 </mat-stepper> -->
 <div class="row justify-content-center ">
     <div class="col-4 mt-4">
+      <ng-container *ngIf="questions">
+        <ng-container *ngIf="questions.length > 0 else noQuestions">
         <mat-card class="example-card">
             <mat-card-title>{{currentQuestion.questionAsked.topicQuestion}}</mat-card-title>
             <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
@@ -31,5 +33,11 @@
               <button mat-button (click)="getNextQuestion()">next</button>
             </mat-card-actions>
           </mat-card>
+        </ng-container>
+      </ng-container>
     </div>
 </div>
+
+<ng-template #noQuestions>
+  <p>There are no questions for this assessment.</p>
+</ng-template>
