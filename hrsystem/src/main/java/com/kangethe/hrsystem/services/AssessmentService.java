@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -37,8 +38,12 @@ public class AssessmentService {
     public ResponseEntity<Assessment> createAssessment(Long userId) {
 
             Assessment actualAssessment = new Assessment();
-            User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with id: " + userId + "Doesn't exist"));
-            actualAssessment.addUser(user);
+
+            Optional<User> user = userRepository.findById(userId);
+            if(user.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            actualAssessment.addUser(user.get());
 
             Assessment savedAssessment = assessmentRepository.save(actualAssessment);
             List<AssessmentQuestion> allQuestions = assessmentQuestionsService.addQuestions(savedAssessment.getId());
@@ -50,7 +55,8 @@ public class AssessmentService {
 
     public ResponseEntity<List<Assessment>> getAssessmentsByUserId(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("User with id: " + userId + " Not Found");
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<Assessment> assessments = assessmentRepository.findAssessmentsByUsersId(userId);
         return ResponseEntity.ok(assessments);
@@ -79,7 +85,8 @@ public class AssessmentService {
     }
     public ResponseEntity<HttpStatus> deleteAssessment(Long assessmentId) {
         if (!assessmentRepository.existsById(assessmentId)) {
-            throw new NotFoundException("Assessment With Id: " + assessmentId + " Not Found");
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Assessment assessment = assessmentRepository.findById(assessmentId).get();
         assessmentRepository.delete(assessment);

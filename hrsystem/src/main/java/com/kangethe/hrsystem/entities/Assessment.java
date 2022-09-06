@@ -28,9 +28,9 @@ public class Assessment extends AuditModel {
     @JsonIgnore
     private List<AssessmentQuestion> questions = new ArrayList<>();
 
-    private Boolean isCompleted;
-    private int questionsAnswered;
-    private int totalNumberOfQuestions;
+    private Boolean isCompleted = false;
+    private int questionsAnswered = 0;
+    private int totalNumberOfQuestions = 0;
 
     public void addUser(User user) {
         this.users.add(user);

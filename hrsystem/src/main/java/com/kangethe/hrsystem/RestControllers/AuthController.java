@@ -77,4 +77,9 @@ public class AuthController {
         SignUpRequest signUpRequest = new SignUpRequest( email, password, is_Admin, is_Moderator);
         return authService.registerUser(signUpRequest);
     }
+    @Operation(summary = "sign up a new user", description = "Signs Up a new User", tags = {"Authentication"})
+    @PostMapping("/signup")
+    public ResponseEntity<User> signUpRequestBody(@RequestBody  SignUpRequest signUpRequest) {
+        return authService.registerUser(signUpRequest);
+    }
 }

@@ -19,7 +19,7 @@ public class AssessmentScoreService {
     }
 
     public ResponseEntity<AssessmentScore> addAssessment(AssessmentScore assessmentScore) {
-        return new ResponseEntity(assessmentScoreRepository.save(assessmentScore), HttpStatus.OK);
+        return new ResponseEntity<>(assessmentScoreRepository.save(assessmentScore), HttpStatus.OK);
     }
 
     public ResponseEntity<List<AssessmentScore>> getAllAssessments() {
